@@ -1,8 +1,8 @@
-name: Publish phx Docker image
+name: Publish Docker image
 on:
   push:
     branches:
-      - main
+      - master
   release:
     types: [published]
 
@@ -18,6 +18,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-          repository: buenolucasbr/phx
+          repository: buenolucas/docker-phx
           tag_with_ref: true
           tags: latest
