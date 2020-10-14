@@ -3,7 +3,7 @@ name: phx dockerfile push
 on:
   push:
     branches:
-      - master
+      - main
   release:
     types: [published]
 
