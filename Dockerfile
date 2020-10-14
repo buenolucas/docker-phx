@@ -11,40 +11,66 @@ ADD . /home/arvore
 #########
 # BASE
 #########
-RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq 
+RUN apt-get install -qq -y --no-install-recommends \
             curl \
             git \ 
             build-essential \
             autoconf \
-            m4 \
+            m4 
+            
+RUN apt-get install -qq -y --no-install-recommends \
             libncurses5-dev \
             libwxgtk3.0-gtk3-dev \
             libgl1-mesa-dev \
             libglu1-mesa-dev \
             libpng-dev \
-            libssh-dev \
+            libssh-dev 
+RUN apt-get install -qq -y --no-install-recommends \
             unixodbc-dev \
             xsltproc \
-            fop \
+            fop 
+RUN apt-get install -qq -y --no-install-recommends \
             libxml2-utils \
-            libncurses-dev openjdk-11-jdk \
-            unzip
-
+            libncurses-dev \ 
+            openjdk-11-jdk \
+            unzip 
 #########
 # ASDF
 #########
 ENV ASDF_DIR /usr/local/asdf
 RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.8.0
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN echo "source $ASDF_DIR/asdf.sh" >> ~/.bashrc
+
+# --------------------------
+# install plugins
+# --------------------------
 RUN source $ASDF_DIR/asdf.sh \
     && asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git \
     && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git \
     && asdf plugin-add rust https://github.com/code-lever/asdf-rust.git \
     && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-RUN source $ASDF_DIR/asdf.sh && cd ${PROJECT_DIR} && asdf install
 
+# --------------------------
+# install runtime versions
+# --------------------------
+# erlang 21.3.8.6
+# elixir 1.8.2-otp-21
+# rust 1.43.1
+# yarn 1.7.0
+# nodejs 10.15.3
+# -------------------------
+RUN source $ASDF_DIR/asdf.sh \
+    && asdf install erlang 21.3.8.6 \
+    && asdf install elixir 1.8.2-otp-21 \
+    && asdf install rust 1.43.1 \
+    && asdf install nodejs 10.15.3 
 
-
+#########
+# MYSQL
+#########
 
 # install runtimes
 
