@@ -4,6 +4,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+ENV echo ZABAU
 # # Phoenix Installation
 # RUN apt-get update && apt-get install -y wget curl postgresql postgresql-contrib libpq-dev bzip2 mysql-client libmysqlclient-dev && \
 # rm -rf /var/lib/apt/lists/* && \
