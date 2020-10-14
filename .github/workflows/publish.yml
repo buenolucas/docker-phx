@@ -16,8 +16,8 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
-          username: ${{ secrets.buenolucasbr }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: buenolucas/react-native-android
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+          repository: buenolucas/docker-phx
           tag_with_ref: true
           tags: latest
