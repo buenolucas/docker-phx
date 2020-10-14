@@ -1,0 +1,36 @@
+version: 2
+
+defaults: &defaults
+  machine: true
+  working_directory: ~/project
+
+aliases:
+  - &build-docker
+    name: Build Docker Image
+    command: |
+      docker build -t buenolucas/docker-phx .
+
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *build-docker
+      
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *build-docker
+      - run:
+          name: Deploy docker
+          command: |
+            source ~/.bashrc
+            nvm i node
+            node publish_docker.js
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - test
