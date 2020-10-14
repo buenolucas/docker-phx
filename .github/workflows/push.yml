@@ -15,10 +15,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2 
         with:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
-          repository: buenolucas/phx
-          tag_with_ref: true
-          tags: latest
+          push: true
+          tags: buenolucas/phx
