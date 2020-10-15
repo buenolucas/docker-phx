@@ -29,6 +29,7 @@ jobs:
             nvm i node
             node publish_docker.js
 
+            
 workflows:
   version: 2
   main:
