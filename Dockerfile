@@ -1,12 +1,8 @@
 FROM ubuntu:20.04
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-#ENV LC_ALL en_US.UTF-8
-
-ENV PROJECT_DIR /home/arvore
-WORKDIR  /home/arvore/
-ADD . /home/arvore
+ENV LANG C.UTF-8
+ENV LANGUAGE C:en
+ENV LC_ALL C
 
 #########
 # BASE
@@ -18,24 +14,25 @@ RUN apt-get install -qq -y --no-install-recommends \
             git \ 
             build-essential \
             autoconf \
-            m4 
-            
-RUN apt-get install -qq -y --no-install-recommends \
+            m4 \
             libncurses5-dev \
             libwxgtk3.0-gtk3-dev \
             libgl1-mesa-dev \
             libglu1-mesa-dev \
             libpng-dev \
-            libssh-dev 
-RUN apt-get install -qq -y --no-install-recommends \
+            libssh-dev \
             unixodbc-dev \
             xsltproc \
-            fop 
-RUN apt-get install -qq -y --no-install-recommends \
+            fop \
             libxml2-utils \
             libncurses-dev \ 
             openjdk-11-jdk \
-            unzip 
+            unzip \
+            dirmngr \
+            gpg 
+
+            
+
 #########
 # ASDF
 #########
@@ -48,9 +45,12 @@ RUN echo "source $ASDF_DIR/asdf.sh" >> ~/.bashrc
 # install plugins
 # --------------------------
 RUN source $ASDF_DIR/asdf.sh \
-    && asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git \
-    && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git \
-    && asdf plugin-add rust https://github.com/code-lever/asdf-rust.git \
+    && asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+RUN source $ASDF_DIR/asdf.sh \
+    && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git 
+RUN source $ASDF_DIR/asdf.sh \
+    && asdf plugin-add rust https://github.com/code-lever/asdf-rust.git 
+RUN source $ASDF_DIR/asdf.sh \
     && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
 # --------------------------
@@ -66,7 +66,19 @@ RUN source $ASDF_DIR/asdf.sh \
     && asdf install erlang 21.3.8.6 \
     && asdf install elixir 1.8.2-otp-21 \
     && asdf install rust 1.43.1 \
+    && bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring' \
     && asdf install nodejs 10.15.3 
+    
+# --------------------------
+# install runtime versions
+# --------------------------
+# erlang 21.3.8.6
+# elixir 1.8.2-otp-21
+# rust 1.43.1
+# yarn 1.7.0
+# nodejs 10.15.3
+# -------------------------
+
 
 #########
 # MYSQL
