@@ -5,14 +5,14 @@ function publishDocker() {
   const repo = `buenolucasbr/phx`
   const finaltag = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`
   const cmd =`
-docker login -u ${process.env.DOCKER_USER} -p ${process.env.DOCKER_PASS}
+docker login -u buenolucasbr -p navehub1010
 docker build -t ${repo}:${finaltag} .
 docker tag ${repo}:${finaltag} ${repo}
 docker push ${repo}:${finaltag}
 docker push ${repo}
   `
   cmd.trim().split("\n").map(i => {
-    const cmd = i.trim();
+    const cmd = i.trim(); 
     if (cmd) {
       if (!cmd.includes('login')) {
         console.log(cmd);
