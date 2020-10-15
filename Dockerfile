@@ -63,12 +63,13 @@ RUN source $ASDF_DIR/asdf.sh \
 # nodejs 10.15.3
 # -------------------------
 RUN source $ASDF_DIR/asdf.sh \
+    && export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac" \
     && asdf install erlang 21.3.8.6 \
     && asdf install elixir 1.8.2-otp-21 \
     && asdf install rust 1.43.1 \
     && bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring' \
     && asdf install nodejs 10.15.3 
-    
+
 # --------------------------
 # install runtime versions
 # --------------------------
