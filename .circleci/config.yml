@@ -34,4 +34,4 @@ workflows:
   main:
     jobs:
       - test
-      - build
+      - deploy
